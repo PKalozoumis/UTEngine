@@ -29,9 +29,9 @@ int main(int argc, char* argv[])
 		game->render();
 	}
 
-	game->clean();
+	//Master
 
-	//Hello world
+	game->clean();
 
 	return 0;
 }

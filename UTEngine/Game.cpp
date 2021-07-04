@@ -2,12 +2,12 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "TextureManager.h"
+#include "GameObject.h"
 #include <iostream>
 
 using namespace std;
 
-SDL_Texture* playerTexture = NULL;
-SDL_Rect srcRect, destRect;
+GameObject* objPlayer = NULL;
 
 Game::Game(){} 
 Game::~Game(){}
@@ -44,9 +44,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 	else isRunning = false;
 
-	//Draw textures
-
-	playerTexture = TextureManager::loadTexture("assets/sprites/player/spr_player_front0.png", renderer);
+	objPlayer = new GameObject("assets/sprites/player/spr_player_front0.png", renderer);
 }
 
 void Game::handleEvents()
@@ -63,19 +61,13 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	counter++;
-	//cout<<counter<<endl;
-	destRect.w = 38;
-	destRect.h = 58;
-	destRect.x++;
+	objPlayer->update();
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-
-	SDL_RenderCopy(renderer, playerTexture, NULL, &destRect);
-
+	objPlayer -> render();
 	SDL_RenderPresent(renderer);
 }
 

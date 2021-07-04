@@ -11,6 +11,8 @@ class GameObject
 		void render();
 		int getX();
 		int getY();
+		void addX(int x);
+		void addY(int y);
 
 	private:
 		int x;

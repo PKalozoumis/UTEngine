@@ -3,6 +3,7 @@
 #include "SDL_image.h"
 #include "TextureManager.h"
 #include "GameObject.h"
+#include "Controller.h"
 #include <iostream>
 
 using namespace std;
@@ -61,6 +62,19 @@ void Game::handleEvents()
 
 void Game::update()
 {
+	const Uint8* keystate = SDL_GetKeyboardState(NULL);
+
+	if (keystate[Controller::keyRight])
+		objPlayer->addX(5);
+	else if (keystate[Controller::keyLeft])
+		objPlayer->addX(-5);
+
+	if (keystate[Controller::keyDown])
+		objPlayer->addY(5);
+	else if (keystate[Controller::keyUp])
+		objPlayer->addY(-5);
+
+
 	objPlayer->update();
 }
 

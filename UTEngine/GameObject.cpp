@@ -11,8 +11,8 @@ GameObject::GameObject(const char* textureSheet, SDL_Renderer* renderer, int x, 
 
 void GameObject::update()
 {
-	srcRect.w = 32;
-	srcRect.h = 32;
+	srcRect.w = 19;
+	srcRect.h = 29;
 	srcRect.x = 0;
 	srcRect.y = 0;
 
@@ -35,4 +35,14 @@ int GameObject::getX()
 int GameObject::getY()
 {
 	return y;
+}
+
+void GameObject::addX(int x)
+{
+	this->x += x;
+}
+
+void GameObject::addY(int y)
+{
+	this->y += y;
 }

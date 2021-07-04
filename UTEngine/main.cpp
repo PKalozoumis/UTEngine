@@ -29,8 +29,6 @@ int main(int argc, char* argv[])
 		game->render();
 	}
 
-	//Master
-
 	game->clean();
 
 	return 0;

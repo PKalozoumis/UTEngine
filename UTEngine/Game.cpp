@@ -1,8 +1,12 @@
 #include "Game.h"
 #include "SDL.h"
+#include "SDL_image.h"
 #include <iostream>
 
 using namespace std;
+
+SDL_Texture* playerTexture = NULL;
+SDL_Rect srcRect, destRect;
 
 Game::Game(){} 
 Game::~Game(){}
@@ -38,6 +42,12 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		isRunning = true;
 	}
 	else isRunning = false;
+
+	//Draw textures
+
+	SDL_Surface* tmpSurface = IMG_Load("assets/sprites/player/spr_player_front0.png");
+	playerTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
 }
 
 void Game::handleEvents()
@@ -56,12 +66,16 @@ void Game::update()
 {
 	counter++;
 	//cout<<counter<<endl;
+	destRect.w = 38;
+	destRect.h = 58;
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-	//Imagine I drew something really cool here
+
+	SDL_RenderCopy(renderer, playerTexture, NULL, &destRect);
+
 	SDL_RenderPresent(renderer);
 }
 

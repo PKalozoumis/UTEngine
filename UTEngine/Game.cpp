@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "SDL.h"
 #include "SDL_image.h"
+#include "TextureManager.h"
 #include <iostream>
 
 using namespace std;
@@ -45,9 +46,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	//Draw textures
 
-	SDL_Surface* tmpSurface = IMG_Load("assets/sprites/player/spr_player_front0.png");
-	playerTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-	SDL_FreeSurface(tmpSurface);
+	playerTexture = TextureManager::loadTexture("assets/sprites/player/spr_player_front0.png", renderer);
 }
 
 void Game::handleEvents()
@@ -68,6 +67,7 @@ void Game::update()
 	//cout<<counter<<endl;
 	destRect.w = 38;
 	destRect.h = 58;
+	destRect.x++;
 }
 
 void Game::render()

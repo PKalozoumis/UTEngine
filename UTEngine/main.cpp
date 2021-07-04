@@ -31,5 +31,7 @@ int main(int argc, char* argv[])
 
 	game->clean();
 
+	//Hello world
+
 	return 0;
 }

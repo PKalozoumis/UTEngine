@@ -1,0 +1,24 @@
+{ "columns":0,
+ "grid":
+    {
+     "height":1,
+     "orientation":"orthogonal",
+     "width":1
+    },
+ "margin":0,
+ "name":"tileset_air",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.5.0",
+ "tileheight":20,
+ "tiles":[
+        {
+         "id":0,
+         "image":"tile_air.png",
+         "imageheight":20,
+         "imagewidth":20
+        }],
+ "tilewidth":20,
+ "type":"tileset",
+ "version":1.5
+}

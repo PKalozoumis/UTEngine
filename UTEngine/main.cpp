@@ -7,14 +7,13 @@
 
 #undef main
 
+int deltaTime = 0;
+
 int main(int argc, char* argv[])
 {
 	Uint32 frameStart;
-	int frameTime;
-
 	Game* game = new Game();
-
-	game->init("UNDERTALE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, false);
+	game->init("UNDERTALE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, false, "room_ruinstest.json");
 
 	while(game->running())
 	{
@@ -23,12 +22,13 @@ int main(int argc, char* argv[])
 		game->handleEvents();
 		game->update();
 		game->render();
+		game->endFrame();
 
-		frameTime = SDL_GetTicks() - frameStart;
+		deltaTime = SDL_GetTicks() - frameStart;
 
-		if (frameTime < FDELAY)
+		if (deltaTime < FDELAY)
 		{
-			SDL_Delay(FDELAY - frameTime);
+			SDL_Delay(FDELAY - deltaTime);
 		}
 	}
 

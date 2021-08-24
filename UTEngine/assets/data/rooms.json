@@ -1,0 +1,25 @@
+{
+	"rooms":
+	[
+		{
+			"name": "Test Map 1",
+			"filename": "room_testmap.json",
+			"id": 0
+		},
+		{
+			"name": "Test Map 2",
+			"filename": "room_testmap2.json",
+			"id": 1
+		},
+		{
+			"name": "Test Map 3",
+			"filename": "room_testmap3.json",
+			"id": 2
+		},
+		{
+			"name": "Ruins - Testing Grounds",
+			"filename": "room_ruinstest.json",
+			"id": 3
+		}
+	]
+}

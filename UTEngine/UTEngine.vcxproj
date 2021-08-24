@@ -72,23 +72,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Folders\Code\C++\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Folders\Code\C++\Projects\UTEngine\UTEngine\discord;C:\Folders\Code\C++\SDL2_ttf-2.0.15\include;C:\Folders\Code\C++\json\single_include\nlohmann;C:\Folders\Code\C++\SDL2-2.0.14\include;C:\Folders\Code\C++\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Folders\Code\Discord game sdk\lib\x86_64;C:\Folders\Code\C++\SDL2_ttf-2.0.15\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64;C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>ruleset.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Folders\Code\C++\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Folders\Code\C++\Projects\UTEngine\UTEngine\discord;C:\Folders\Code\C++\SDL2_ttf-2.0.15\include;C:\Folders\Code\C++\json\single_include\nlohmann;C:\Folders\Code\C++\SDL2-2.0.14\include;C:\Folders\Code\C++\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Folders\Code\Discord game sdk\lib\x86_64;C:\Folders\Code\C++\SDL2_ttf-2.0.15\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64;C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>ruleset.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Folders\Code\C++\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Folders\Code\C++\Projects\UTEngine\UTEngine\discord;C:\Folders\Code\C++\SDL2_ttf-2.0.15\include;C:\Folders\Code\C++\json\single_include\nlohmann;C:\Folders\Code\C++\SDL2-2.0.14\include;C:\Folders\Code\C++\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Folders\Code\Discord game sdk\lib\x86_64;C:\Folders\Code\C++\SDL2_ttf-2.0.15\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64;C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>ruleset.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Folders\Code\C++\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Folders\Code\C++\Projects\UTEngine\UTEngine\discord;C:\Folders\Code\C++\SDL2_ttf-2.0.15\include;C:\Folders\Code\C++\json\single_include\nlohmann;C:\Folders\Code\C++\SDL2-2.0.14\include;C:\Folders\Code\C++\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Folders\Code\Discord game sdk\lib\x86_64;C:\Folders\Code\C++\SDL2_ttf-2.0.15\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64;C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>ruleset.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -96,14 +100,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Folders\Code\C++\SDL2_image-2.0.5\include;C:\Folders\Code\C++\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Folders\Code\C++\Projects\UTEngine\UTEngine\discord;C:\Folders\Code\C++\SDL2_ttf-2.0.15\include;C:\Folders\Code\C++\json\single_include\nlohmann;C:\Folders\Code\C++\SDL2_image-2.0.5\include;C:\Folders\Code\C++\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Folders\Code\Discord game sdk\lib\x86_64;C:\Folders\Code\C++\SDL2_ttf-2.0.15\lib\x64;C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;discord_game_sdk.dll.lib</AdditionalDependencies>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -113,16 +121,20 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Folders\Code\C++\SDL2_image-2.0.5\include;C:\Folders\Code\C++\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Folders\Code\C++\Projects\UTEngine\UTEngine\discord;C:\Folders\Code\C++\SDL2_ttf-2.0.15\include;C:\Folders\Code\C++\json\single_include\nlohmann;C:\Folders\Code\C++\SDL2_image-2.0.5\include;C:\Folders\Code\C++\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Folders\Code\Discord game sdk\lib\x86_64;C:\Folders\Code\C++\SDL2_ttf-2.0.15\lib\x64;C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;discord_game_sdk.dll.lib</AdditionalDependencies>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -130,14 +142,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Folders\Code\C++\SDL2_image-2.0.5\include;C:\Folders\Code\C++\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Folders\Code\C++\Projects\UTEngine\UTEngine\discord;C:\Folders\Code\C++\SDL2_ttf-2.0.15\include;C:\Folders\Code\C++\json\single_include\nlohmann;C:\Folders\Code\C++\SDL2_image-2.0.5\include;C:\Folders\Code\C++\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Folders\Code\Discord game sdk\lib\x86_64;C:\Folders\Code\C++\SDL2_ttf-2.0.15\lib\x64;C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;discord_game_sdk.dll.lib</AdditionalDependencies>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -147,29 +163,62 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Folders\Code\C++\SDL2_image-2.0.5\include;C:\Folders\Code\C++\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Folders\Code\C++\Projects\UTEngine\UTEngine\discord;C:\Folders\Code\C++\SDL2_ttf-2.0.15\include;C:\Folders\Code\C++\json\single_include\nlohmann;C:\Folders\Code\C++\SDL2_image-2.0.5\include;C:\Folders\Code\C++\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Folders\Code\Discord game sdk\lib\x86_64;C:\Folders\Code\C++\SDL2_ttf-2.0.15\lib\x64;C:\Folders\Code\C++\SDL2_image-2.0.5\lib\x64;C:\Folders\Code\C++\SDL2-2.0.14\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;discord_game_sdk.dll.lib</AdditionalDependencies>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ColliderComponent.cpp" />
+    <ClCompile Include="color.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="ECS.cpp" />
+    <ClCompile Include="functions.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Tileset.cpp" />
+    <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColliderComponent.h" />
+    <ClInclude Include="color.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="functions.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="ECS.h" />
+    <ClInclude Include="Layer.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Registry.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Room.h" />
+    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="Tileset.h" />
+    <ClInclude Include="Vec2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UTEngine.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,45 @@
+{
+	"fonts":
+	[
+		{
+			"name": "fnt_main",
+			"filename": "fnt_main.ttf",
+			"size": 16
+		},
+		{
+			"name": "fnt_mainbig",
+			"filename": "fnt_main.ttf",
+			"size": 32
+		},
+		{
+			"name": "fnt_mainsmall",
+			"filename": "fnt_main.ttf",
+			"size": 10
+		},
+		{
+			"name": "fnt_sans",
+			"filename": "fnt_sans.ttf",
+			"size": 16
+		},
+		{
+			"name": "fnt_papyrus",
+			"filename": "fnt_papyrus.ttf",
+			"size": 16
+		},
+		{
+			"name": "fnt_small",
+			"filename": "fnt_small.ttf",
+			"size": 16
+		},
+		{
+			"name": "fnt_mars",
+			"filename": "fnt_mars.ttf",
+			"size": 16
+		},
+		{
+			"name": "fnt_debug",
+			"filename": "fnt_debug.ttf",
+			"size": 8
+		}
+	]
+}

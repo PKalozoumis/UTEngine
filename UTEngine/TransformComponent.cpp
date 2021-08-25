@@ -189,9 +189,6 @@ void TransformComponent::update(void)
 
 void TransformComponent::draw(void)
 {
-	drawSetColor(c_lime);
-	SDL_RenderDrawPoint(Game::renderer, position.x, position.y);
-	drawResetColor();
 }
 
 void TransformComponent::resetMoveTime(void)

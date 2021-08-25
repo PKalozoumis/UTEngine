@@ -26,7 +26,13 @@ Text::Text(int x, int y, std::string text, std::string font, SDL_Color textColor
 
 	if (!simpleText)
 	{
-		SDL_Rect tempPos = {x,y,0,0};
+		SDL_Rect tempPos = {0,0,0,0};
+
+		textboxPos.x = 16;
+		textboxPos.y = 160;
+
+		pos.x = textboxPos.x + xgap;
+		pos.y = textboxPos.y + ygap;
 
 		#pragma region ======================================= SPLITTING =======================================
 
@@ -34,7 +40,6 @@ Text::Text(int x, int y, std::string text, std::string font, SDL_Color textColor
 
 		splitPos.push_back(0);
 
-		int line = 0;
 		while (splitPos[line] < textLength)
 		{
 			if (splitPos[line] + maxChara - 2 < textLength)
@@ -57,7 +62,7 @@ Text::Text(int x, int y, std::string text, std::string font, SDL_Color textColor
 				tempPos.x += xscale*spacing;
 			}
 
-			tempPos.x  = x + 2*xscale*spacing;;
+			tempPos.x = 2*xscale*spacing;
 			tempPos.y += yscale*18;
 
 			line++;
@@ -67,6 +72,8 @@ Text::Text(int x, int y, std::string text, std::string font, SDL_Color textColor
 
 	}
 	else refreshText(text);
+
+	std::cout << line << std::endl;
 }
 
 void Text::refreshText(std::string text)
@@ -113,7 +120,7 @@ void Text::refreshOutline(void)
 			int tempWidth = pos.w;
 			int tempHeight = pos.h;
 
-			outlineTexture = SDL_CreateTexture(Game::renderer, NULL, SDL_TEXTUREACCESS_TARGET, outlinePos.w, outlinePos.h);
+			outlineTexture = SDL_CreateTexture(Game::renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, outlinePos.w, outlinePos.h);
 			SDL_SetRenderTarget(Game::renderer, outlineTexture);
 			SDL_SetTextureBlendMode(outlineTexture, SDL_BLENDMODE_BLEND);
 
@@ -208,29 +215,54 @@ void Text::update(void)
 {
 	pos.w = trueWidth*xscale;
 	pos.h = trueHeight*yscale;
+
+	if (line > 3)
+	{
+		textboxPos.y = 5;
+	}
+	else textboxPos.y = 160 - 155*(Game::getPlayerPosInView());
+
+	pos.x = textboxPos.x + xgap;
+	pos.y = textboxPos.y + ygap;
+
+	if (alarm == -1)
+		alarm = 1;
+
+	if (alarm == 0)
+		alarm = 1;
+
+	if (alarm - 1 >= 0)
+		alarm--;
+
+	//if (alarm >= 0)
+		//std::cout << alarm <<std::endl;
 }
 
 void Text::draw(void)
 {
 	if (!simpleText)
 	{
-		static float typeTimer = 0;
-		typeTimer+=1.2;
-
-		std::cout << typeTimer << std::endl;
-
-		for (int i = 0; i < textLength; i++)
+		if ((alarm == 0)&&(currentLetterIndex + 1 <= textLength))
 		{
-			if (typeTimer >= (i+1))
-			{
-				SDL_Rect tempPos = positionArray[i];
+			currentLetterIndex++;
+		}
 
-				//tempPos.x += (rand() % 2);
-				//tempPos.y += (rand() % 2);
+		if (line > 3)
+		{
+			drawMenuBox(textboxPos.x, textboxPos.y, textboxPos.x + 289, textboxPos.y + 76 + 18*yscale*(line-3));
+		}
+		else drawMenuBox(textboxPos.x, textboxPos.y, textboxPos.x + 289, textboxPos.y + 76);
 
-				SDL_RenderCopy(Game::renderer, textureArray[i], nullptr, &tempPos);
-			}
-			else break;
+		for (int i = 0; i < currentLetterIndex; i++)
+		{
+			SDL_Rect tempPos = positionArray[i];
+			tempPos.x += pos.x;
+			tempPos.y += pos.y;
+
+			//tempPos.x += (rand() % 2);
+			//tempPos.y += (rand() % 2);
+
+			SDL_RenderCopy(Game::renderer, textureArray[i], nullptr, &tempPos);
 		}
 	}
 	else

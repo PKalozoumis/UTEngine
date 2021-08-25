@@ -48,15 +48,15 @@ void SpriteComponent::update(void)
 		case ycenter: yalign = -static_cast<int>(destRect.h/2); break;
 	}
 
-	if ((transform->getX() >= Game::xbor) && (transform->getX() <= Game::camera.w -  Game::xbor))
+	if ((transform->getX() >= Game::getXbor()) && (transform->getX() <= Game::camera.w -  Game::getXbor()))
 	{
-		destRect.x = Game::xbor + xalign;
+		destRect.x = Game::getXbor() + xalign;
 	}
 	else destRect.x = transform->getX() - Game::camera.x + xalign;
 
-	if ((transform->getY() >= Game::ybor) && (transform->getY() <= Game::camera.h -  Game::ybor))
+	if ((transform->getY() >= Game::getYbor()) && (transform->getY() <= Game::camera.h -  Game::getYbor()))
 	{
-		destRect.y = Game::ybor + yalign;
+		destRect.y = Game::getYbor() + yalign;
 	}
 	else destRect.y = transform->getY() - Game::camera.y + yalign;
 

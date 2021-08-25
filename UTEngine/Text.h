@@ -35,11 +35,17 @@ class Text
 		TTF_Font** fontArray;
 		std::vector<int> splitPos;
 		OutlineType outlineType;
+		int alarm = -1;
 
-		int maxChara = 34;
+		int maxChara = 33; //34 is the absolute MAX if you wanna be practical, it just looks ugly as hell
 		int spacing = 8;
 		float xscale, yscale;
 		int trueWidth, trueHeight;
+		int xgap = 14;
+		int ygap = 10;
+		int line = 0;
+
+		int currentLetterIndex = 0;
 
 		bool simpleText;
 		

@@ -12,6 +12,10 @@
 #include <map>
 #include "Menu.h"
 #include <cstdlib>
+#include "TransformComponent.h"
+#include "SpriteComponent.h"
+#include <vector>
+#include "Text.h"
 
 class Room;
 
@@ -32,7 +36,6 @@ class Game
 		static SDL_Rect camera;
 		static Room* currentRoom;
 		static Menu menu;
-		static int xbor, ybor;
 
 		Game(void);
 		~Game(void);
@@ -58,15 +61,27 @@ class Game
 		static bool getFullscreen(void);
 		static bool getToggledFullscreen(void);
 
+		static bool getPlayerPosInView(void);
+
+		static int getXbor(void);
+		static int getYbor(void);
+
 	private:
+		std::vector<Text*> textVector;
+
 		int screenshotWidth, screenshotHeight;
 		std::string mainPath;
 		std::string savePath;
 		std::string screenshotPath;
 		unsigned int gameTime = 0;
 		bool isRunning;
-		bool isRenderingText = false;
 		std::vector<SDL_Joystick*> joysticks;
 		static bool toggledFullscreen;
+		static bool playerPosInView; //0 for top half, 1 for bottom half
+		static int xbor, ybor;
+		TransformComponent* playerTransform;
+		SpriteComponent* playerSprite;
+
+		void debugScript(void);
 };
 

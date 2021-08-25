@@ -52,6 +52,11 @@ class Text
 		SDL_Rect pos, outlinePos, textboxPos;
 		SDL_Color textColor, outlineColor;
 
+		bool createdOutline = false;
+		SDL_Color previousColor, previousOutlineColor;
+		OutlineType previousType;
+		std::string previousText;
+
 	public:
 		Text(int x, int y, std::string text, std::string font = "fnt_main", SDL_Color textColor = c_white, OutlineType outlineType = full, SDL_Color outlineColor = c_null, float xscale = 1, float yscale = 1, bool simpleText = false);
 		~Text(void);

@@ -25,6 +25,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <filesystem>
+#include "Debug.h"
 
 #pragma warning(disable : 4996) //Allows me to get appdata path with getenv
 
@@ -45,6 +46,10 @@ bool Game::toggledFullscreen = false;
 int Game::xbor = 160;
 int Game::ybor = 120;
 bool Game::playerPosInView = 0;
+TransformComponent* Game::playerTransform;
+SpriteComponent* Game::playerSprite;
+
+Text* testText;
 
 Game::Game(void){} 
 Game::~Game(void){}
@@ -238,6 +243,7 @@ void Game::init(std::string title, int xpos, int ypos, int width, int height, bo
 	#pragma endregion
 
 	Controller::init();
+	debug.init();
 }
 
 void Game::handleEvents(void)
@@ -296,6 +302,23 @@ void Game::update(void)
 
 	if (Controller::buttonPressed(SDL_SCANCODE_J))
 		loadJoysticks();
+
+	if (Controller::buttonPressed(SDL_SCANCODE_M))
+	{
+		testText = new Text(2, 0 , "sus", "fnt_main", c_white, full, c_red, 1, 1, true);
+		textVector.push_back(testText);
+	}
+
+	if (Controller::buttonPressed(SDL_SCANCODE_C))
+	{
+		//testText->setColor(c_lime);
+		//testText->setScale(2,1);
+	}
+
+	if (Controller::buttonPressed(SDL_SCANCODE_N))
+	{
+		testText->refreshText("amogus");
+	}
 
 	if (Controller::buttonPressed(SDL_SCANCODE_T))
 	{
@@ -407,6 +430,15 @@ void Game::update(void)
 
 	#pragma endregion
 
+	#pragma region Debug Toggle
+
+	if (Controller::buttonPressed(SDL_SCANCODE_F6))
+	{
+		debugMode = !debugMode;
+	}
+
+	#pragma endregion
+
 	//Game go oof
 	if (Controller::buttonPressed("keyEnd"))
 		isRunning = false;
@@ -514,15 +546,12 @@ void Game::update(void)
 		txt->update();
 	}
 
-	debugScript();
+	if (debugMode)
+		debug.update();
 
 	gameTime++;
 
 	//std::cout << "(" << px << ", " << py << ")" << std::endl;
-}
-
-void Game::debugScript(void)
-{
 }
 
 void Game::render(void)
@@ -532,6 +561,9 @@ void Game::render(void)
 	currentRoom->drawRoom();
 	manager.draw();
 	menu.draw();
+
+	if (debugMode)
+		debug.draw();
 	
 	//drawRectangleColor(-camera.x, - camera.y, currentRoom->getWidth() - camera.x, currentRoom->getHeight() - camera.y, 1, c_lime);
 	//drawRectangleColor(160 - camera.x, 120 - camera.y, currentRoom->getWidth() - 160 - camera.x, currentRoom->getHeight() - 120 - camera.y, 1, c_white);
@@ -615,3 +647,25 @@ bool Game::running(void)
 {
 	return isRunning;
 }
+
+int Game::playerX(void)
+{
+	return playerTransform->getX();
+}
+
+int Game::playerY(void)
+{
+	return playerTransform->getY();
+}
+
+std::string Game::getRoomName(void)
+{
+	return currentRoom->getName();
+}
+
+std::string Game::getRoomFilename(void)
+{
+	return currentRoom->getFilename();
+}
+
+

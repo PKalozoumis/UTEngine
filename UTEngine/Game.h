@@ -16,6 +16,7 @@
 #include "SpriteComponent.h"
 #include <vector>
 #include "Text.h"
+#include "Debug.h"
 
 class Room;
 
@@ -66,6 +67,12 @@ class Game
 		static int getXbor(void);
 		static int getYbor(void);
 
+		static int playerX(void);
+		static int playerY(void);
+
+		static std::string getRoomFilename(void);
+		static std::string getRoomName(void);
+
 	private:
 		std::vector<Text*> textVector;
 
@@ -79,9 +86,10 @@ class Game
 		static bool toggledFullscreen;
 		static bool playerPosInView; //0 for top half, 1 for bottom half
 		static int xbor, ybor;
-		TransformComponent* playerTransform;
-		SpriteComponent* playerSprite;
+		static TransformComponent* playerTransform;
+		static SpriteComponent* playerSprite;
 
-		void debugScript(void);
+		Debug debug;
+		bool debugMode = false;
 };
 

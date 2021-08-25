@@ -20,12 +20,12 @@ Text::Text(int x, int y, std::string text, std::string font, SDL_Color textColor
 	this->simpleText = simpleText;
 	this->text = text;
 
-	textureArray = new SDL_Texture*[text.length()];
-	positionArray = new SDL_Rect[text.length()];
-	fontArray = new TTF_Font*[text.length()];
-
 	if (!simpleText)
 	{
+		textureArray = new SDL_Texture*[text.length()];
+		positionArray = new SDL_Rect[text.length()];
+		fontArray = new TTF_Font*[text.length()];
+
 		SDL_Rect tempPos = {0,0,0,0};
 
 		textboxPos.x = 16;
@@ -71,9 +71,18 @@ Text::Text(int x, int y, std::string text, std::string font, SDL_Color textColor
 		#pragma endregion
 
 	}
-	else refreshText(text);
+	else
+	{
+		createdOutline = false;
+		previousColor = {textColor.r, textColor.g, textColor.b, textColor.a};
+		previousOutlineColor = {outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a};
+		previousType = outlineType;
+		previousText = text;
 
-	std::cout << line << std::endl;
+		refreshText(text);
+	}
+
+	//std::cout << line << std::endl;
 }
 
 void Text::refreshText(std::string text)
@@ -97,17 +106,26 @@ void Text::refreshOutline(void)
 {
 	if (simpleText)
 	{
-		static bool createdOutline = false;
-		static SDL_Color previousColor = {outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a};
-		static OutlineType previousType = outlineType;
-
 		//Outside of if, so that if the text pos or scale change, the outline changes as well.
 		outlinePos.x = pos.x - 1;
 		outlinePos.y = pos.y - 0;
 		outlinePos.w = trueWidth + 1;
 		outlinePos.h = trueHeight + 1;
 
-		if ((!createdOutline || outlineColor.r != previousColor.r || outlineColor.g != previousColor.g || outlineColor.b != previousColor.b || outlineColor.a != previousColor.a || outlineType != previousType || Game::getToggledFullscreen())&&(outlineColor.a))
+		if ((
+			!createdOutline
+			|| outlineColor.r != previousOutlineColor.r
+			|| outlineColor.g != previousOutlineColor.g
+			|| outlineColor.b != previousOutlineColor.b
+			|| outlineColor.a != previousOutlineColor.a
+			|| textColor.r != previousColor.r
+			|| textColor.g != previousColor.g
+			|| textColor.b != previousColor.b
+			|| textColor.a != previousColor.a
+			|| outlineType != previousType
+			|| text != previousText
+			|| Game::getToggledFullscreen()
+			)&&(outlineColor.a))
 		{
 			//std::cout << "You so sussy, I know you took my outline!" << std::endl;
 
@@ -187,7 +205,10 @@ void Text::refreshOutline(void)
 			}
 
 			createdOutline = true;
-			previousColor = outlineColor;
+			previousColor = textColor;
+			previousOutlineColor = outlineColor;
+			previousType = outlineType;
+			previousText = text;
 			SDL_SetRenderTarget(Game::renderer, NULL);
 
 			//Revert the width and height back to the modified values
@@ -222,8 +243,11 @@ void Text::update(void)
 	}
 	else textboxPos.y = 160 - 155*(Game::getPlayerPosInView());
 
-	pos.x = textboxPos.x + xgap;
-	pos.y = textboxPos.y + ygap;
+	if (!simpleText)
+	{
+		pos.x = textboxPos.x + xgap;
+		pos.y = textboxPos.y + ygap;
+	}
 
 	if (alarm == -1)
 		alarm = 1;
@@ -233,9 +257,6 @@ void Text::update(void)
 
 	if (alarm - 1 >= 0)
 		alarm--;
-
-	//if (alarm >= 0)
-		//std::cout << alarm <<std::endl;
 }
 
 void Text::draw(void)

@@ -26,6 +26,8 @@
 #include <ctime>
 #include <filesystem>
 #include "Debug.h"
+#include "Button.h"
+#include "Mouse.h"
 
 #pragma warning(disable : 4996) //Allows me to get appdata path with getenv
 
@@ -229,8 +231,9 @@ void Game::init(std::string title, int xpos, int ypos, int width, int height, bo
 
 	playerTransform->setForcedHeight(playerSprite->getImageHeight());
 	playerTransform->setForcedWidth(playerSprite->getImageWidth());
-	player.getComponent<ColliderComponent>().setY(16);
+	playerTransform->setSpd(3);
 
+	player.getComponent<ColliderComponent>().setY(16);
 
 	if (std::filesystem::exists(savePath + "playerPos.json"))
 	{
@@ -248,8 +251,11 @@ void Game::init(std::string title, int xpos, int ypos, int width, int height, bo
 
 void Game::handleEvents(void)
 {
-	SDL_JoystickEventState(SDL_ENABLE);
 	Controller::update();
+	Mouse::update();
+
+	SDL_JoystickEventState(SDL_ENABLE);
+
 	SDL_PollEvent(&event);
 
 	switch(event.type)
@@ -277,6 +283,8 @@ void Game::handleEvents(void)
 		}
 		break;*/
 
+		case SDL_MOUSEWHEEL: Mouse::setWheelDelta(event.wheel.y); break;
+
 		case SDL_QUIT: isRunning = false; break;
 		default: break;
 	}
@@ -287,6 +295,8 @@ void Game::update(void)
 	#pragma region ================================== INPUT ==================================
 
 	#pragma region Debug
+
+	
 
 	if (Controller::buttonPressed(SDL_SCANCODE_1))
 		fontRegistry.print();
@@ -299,6 +309,9 @@ void Game::update(void)
 
 	if (Controller::buttonPressed(SDL_SCANCODE_4))
 		roomRegistry.print();
+
+	if (Controller::buttonPressed(SDL_SCANCODE_5))
+		playerTransform->print();
 
 	if (Controller::buttonPressed(SDL_SCANCODE_J))
 		loadJoysticks();
@@ -582,6 +595,7 @@ void Game::render(void)
 void Game::endFrame(void)
 {
 	toggledFullscreen = false;
+	event.wheel.y = 0;
 }
 
 void Game::clean(void)

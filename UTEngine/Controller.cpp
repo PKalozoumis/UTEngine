@@ -29,6 +29,8 @@ void Controller::init(void)
 void Controller::update(void)
 {
 	memcpy((void*)preFrame, curFrame, arraySize);
+
+	//curFrame gets updated in Game::handleEvents by SDL_PumpEvents
 }
 
 bool Controller::buttonPressed(std::string function)

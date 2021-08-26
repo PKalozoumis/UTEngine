@@ -327,3 +327,18 @@ void Text::setScale(float xscale, float yscale)
 	this->xscale = xscale;
 	this->yscale = yscale;
 }
+
+int Text::getWidth(void)
+{
+	return trueWidth*xscale;
+}
+
+int Text::getHeight(void)
+{
+	return trueWidth*yscale;
+}
+
+SDL_Rect Text::getPos(void)
+{
+	return pos;
+}

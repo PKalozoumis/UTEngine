@@ -8,7 +8,7 @@
 class ColliderComponent : public Component
 {
 	private:
-		Vec2 pos;
+		Vec2<int> pos;
 
 	public:
 		ColliderComponent():pos(0,0){};

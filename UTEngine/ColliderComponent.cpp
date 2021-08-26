@@ -6,18 +6,18 @@
 
 void ColliderComponent::setX(int x)
 {
-	pos.setX(static_cast<float>(x));
+	pos.setX(x);
 }
 
 void ColliderComponent::setY(int y)
 {
-	pos.setY(static_cast<float>(y));
+	pos.setY(y);
 }
 
 void ColliderComponent::set(int x, int y)
 {
-	pos.setX(static_cast<float>(x));
-	pos.setY(static_cast<float>(y));
+	pos.setX(x);
+	pos.setY(y);
 }
 
 void ColliderComponent::init(void)
@@ -32,8 +32,8 @@ void ColliderComponent::init(void)
 
 void ColliderComponent::update(void)
 {
-	collider.x = static_cast<int>(pos.getX()) + transform->getX();
-	collider.y = static_cast<int>(pos.getY()) + transform->getY();
+	collider.x = pos.getX() + transform->getX();
+	collider.y = pos.getY() + transform->getY();
 	collider.w = transform->getWidth()*transform->getXscale();
 	collider.h = transform->getHeight()*transform->getYscale();
 }

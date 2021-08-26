@@ -7,7 +7,7 @@
 
 nlohmann::json jsonLoad(std::string filename);
 
-bool withinRange(const double,const double, const double);
+bool withinRange(const double num,const double lower, const double upper);
 
 SDL_Rect* createRectangle(int x, int y, int width, int height);
 

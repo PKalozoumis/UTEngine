@@ -5,10 +5,10 @@
 class TransformComponent : public Component
 {
 	private:
-		Vec2 position;
-		Vec2 velocity;
+		Vec2<int> position;
+		Vec2<int> velocity;
 
-		int spd = 3;
+		int spd;
 		int moveTime = 0;
 
 		int xscale = 1, yscale = 1;
@@ -64,5 +64,7 @@ class TransformComponent : public Component
 
 		void resetMoveTime(void);
 		int getMoveTime(void) const;
+
+		void print(void) const;
 };
 

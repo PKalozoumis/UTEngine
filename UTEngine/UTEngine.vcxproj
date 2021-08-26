@@ -179,6 +179,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="color.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="Room.cpp" />
@@ -196,9 +198,9 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tileset.cpp" />
-    <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="color.h" />
     <ClInclude Include="Controller.h" />
@@ -208,6 +210,7 @@
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Registry.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TransformComponent.h" />

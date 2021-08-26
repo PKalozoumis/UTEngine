@@ -200,3 +200,8 @@ int TransformComponent::getMoveTime(void) const
 {
 	return moveTime;
 }
+
+void TransformComponent::print(void) const
+{
+	std::cout << position << std::endl;
+}

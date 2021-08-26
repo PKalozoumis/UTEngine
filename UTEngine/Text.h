@@ -67,5 +67,8 @@ class Text
 		void setScale(float xscale, float yscale);
 		void draw(void);
 		void update(void);
+		int getWidth(void);
+		int getHeight(void);
+		SDL_Rect getPos(void);
 };
 

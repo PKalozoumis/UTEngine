@@ -2,34 +2,116 @@
 
 #include <iostream>
 
+template <typename T>
 struct Vec2
 {
-		float x,y;
+	T x,y;
 
-		Vec2(float x = 0.0f, float y = 0.0f);
+	Vec2(T x = 0, T y = 0)
+	{
+		this->x = x;
+		this->y = y;
+	}
 
-		Vec2 operator+(const Vec2&) const;
-		Vec2 operator-(const Vec2&) const;
-		Vec2 operator*(const Vec2&) const;
-		Vec2 operator/(const Vec2&) const;
+	Vec2 operator+(const Vec2& vec) const
+	{
+		Vec2 tempVec(x + vec.x, y + vec.y);
 
-		void operator+=(const Vec2&);
-		void operator-=(const Vec2&);
-		void operator*=(const Vec2&);
-		void operator/=(const Vec2&);
-		void operator=(const Vec2&);
+		return tempVec;
+	}
 
-		void set(float x, float y);
+	Vec2 operator-(const Vec2& vec) const
+	{
+		Vec2 tempVec(x - vec.x, y - vec.y);
 
-		float getX(void) const;
-		float getY(void) const;
+		return tempVec;
+	}
 
-		void setX(float);
-		void setY(float);
+	Vec2 operator*(const Vec2& vec) const
+	{
+		Vec2 tempVec(x * vec.x, y * vec.y);
 
-		void addX(float);
-		void addY(float);
+		return tempVec;
+	}
 
-		friend std::ostream& operator<<(std::ostream&, const Vec2&);
+	Vec2 operator/(const Vec2& vec) const
+	{
+		Vec2 tempVec(x / vec.x, y / vec.y);
+
+		return tempVec;
+	}
+
+	void operator+=(const Vec2& vec)
+	{
+		x += vec.x;
+		y += vec.y;
+	}
+
+	void operator-=(const Vec2& vec)
+	{
+		x -= vec.x;
+		y -= vec.y;
+	}
+
+	void operator*=(const Vec2& vec)
+	{
+		x *= vec.x;
+		y *= vec.y;
+	}
+
+	void operator/=(const Vec2& vec)
+	{
+		x /= vec.x;
+		y /= vec.y;
+	}
+
+	void operator=(const Vec2& vec)
+	{
+		x = vec.x;
+		y = vec.y;
+	}
+
+	void set(T x, T y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+
+	T getX(void) const
+	{
+		return x;
+	}
+
+	T getY(void) const
+	{
+		return y;
+	}
+
+	void setX(T x)
+	{
+		this->x = x;
+	}
+
+	void setY(T y)
+	{
+		this->y = y;
+	}
+
+	void addX(T x)
+	{
+		this->x += x;
+	}
+
+	void addY(T y)
+	{
+		this->y += y;
+	}
 };
+
+template<typename T>
+std::ostream& operator<<(std::ostream& out, const Vec2<T>& vec)
+{
+	out << "<" << vec.x << ", " << vec.y << ">";
+	return out;
+}
 

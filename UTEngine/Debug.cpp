@@ -10,8 +10,12 @@
 #include "color.h"
 #include "Sprite.h"
 #include "SpriteButton.h"
+#include <vector>
 
 bool Debug::boolButtonHitboxes = false;
+std::vector<std::string> Debug::messages;
+int Debug::messageStartOffset = 0;
+bool Debug::amogusMode = false;
 
 void Debug::init(void)
 {
@@ -57,7 +61,7 @@ void Debug::init(void)
 		new Text(2, 5*9, "", "fnt_main", c_white, full, c_black, 0.5, 0.5, true)
 	));
 
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(buttonHitboxes, new Button(295,5, 40,40)));
+	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(buttonHitboxes, new Button("Toggle Button Hitboxes", "Toggled button hitboxes", 295, 5, 40,40)));
 	
 	//Last Pressed
 	textMap.insert(std::map<DebugInfo, Text*>::value_type
@@ -115,20 +119,29 @@ void Debug::init(void)
 		new Text(2, 13*9, "", "fnt_main", c_white, full, c_black, 0.5, 0.5, true)
 	));
 
+	//Amogus mode
+	textMap.insert(std::map<DebugInfo, Text*>::value_type
+	(
+		amogusModeButton,
+		new Text(2, 14*9, "", "fnt_main", c_white, full, c_black, 0.5, 0.5, true)
+	));
+
+	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(amogusModeButton, new Button("Toggle Amogus Mode", "Toggled Amogus Mode")));
+
 	//Room registry
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printRoomRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintRooms.png", 295, 5)));
+	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printRoomRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintRooms.png", "Print Room Registry", "Printed room registry", 295, 5)));
 
 	//Font registry
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printFontRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintFonts.png", 295, 30)));
+	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printFontRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintFonts.png", "Print Font Registry", "Printed font registry", 295, 30)));
 
 	//Tile registry
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printTileRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintTiles.png", 295, 55)));
+	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printTileRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintTiles.png", "Print Tile Registry", "Printed tile registry", 295, 55)));
 
 	//Tileset registry
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printTilesetRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintTilesets.png", 295, 80)));
+	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printTilesetRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintTilesets.png", "Print Tileset Registry", "Printed tileset registry", 295, 80)));
 
 	//Save the game
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(saveTheGame, new SpriteButton("assets/sprites/debug/sprDebugSave.png", 295, 105)));
+	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(saveTheGame, new SpriteButton("assets/sprites/debug/sprDebugSave.png", "Save", "Game saved", 295, 105)));
 }
 
 void Debug::update(void)
@@ -163,6 +176,7 @@ void Debug::update(void)
 	textMap[mouseDeltaX]->refreshText("Mouse Delta X: " + std::to_string(Mouse::getDeltaX()));
 	textMap[mouseDeltaY]->refreshText("Mouse Delta Y: " + std::to_string(Mouse::getDeltaY()));
 	textMap[mouseWheelDelta]->refreshText("Mouse Wheel Delta: " + std::to_string(Mouse::getWheelDelta()));
+	textMap[amogusModeButton]->refreshText("Amogus Mode: " + std::to_string(amogusMode));
 
 	for (auto& pair : buttonMap)
 	{
@@ -174,23 +188,45 @@ void Debug::update(void)
 		pair.second->update();
 	}
 
-	if (buttonMap[printRoomRegistry]->isPressed())
-		Game::roomRegistry.printOrdered();
+	//Button actions
 
-	if (buttonMap[buttonHitboxes]->isPressed())
-		boolButtonHitboxes = !boolButtonHitboxes;
+		if (buttonMap[printRoomRegistry]->isPressed())
+			Game::roomRegistry.printOrdered();
 
-	//if (buttonMap[printFontRegistry]->isPressed())
-		//Game::fontRegistry.printOrdered();
+		if (buttonMap[buttonHitboxes]->isPressed())
+			boolButtonHitboxes = !boolButtonHitboxes;
 
-	if (buttonMap[printTileRegistry]->isPressed())
-		Game::tileRegistry.printOrdered();
+		//if (buttonMap[printFontRegistry]->isPressed())
+			//Game::fontRegistry.printOrdered();
 
-	if (buttonMap[printTilesetRegistry]->isPressed())
-		Game::tilesetRegistry.printOrdered();
+		if (buttonMap[printTileRegistry]->isPressed())
+			Game::tileRegistry.printOrdered();
 
-	if (buttonMap[saveTheGame]->isPressed())
-		Game::save();
+		if (buttonMap[printTilesetRegistry]->isPressed())
+			Game::tilesetRegistry.printOrdered();
+
+		if (buttonMap[saveTheGame]->isPressed())
+			Game::save();
+
+		if (buttonMap[amogusModeButton]->isPressed())
+			amogusMode = !amogusMode;
+
+	messageStart = (messages.size() >= maxNumberOfMessages)?(messages.size()-maxNumberOfMessages):(0);
+
+	if (Mouse::getWheelDelta() < 0)
+	{
+		if (messageStartOffset - 1 >=0)
+		{
+			messageStartOffset--;
+		}
+	}
+	else if (Mouse::getWheelDelta() > 0)
+	{
+		if (messageStartOffset + 1 <= messageStart)
+		{
+			messageStartOffset++;
+		}
+	}
 }
 
 void Debug::draw(void)
@@ -207,9 +243,16 @@ void Debug::draw(void)
 
 	drawRectangleColorFilled(10, 210, 310, 235, 3, c_gray, c_black);
 
-	if (buttonMap[printRoomRegistry]->checkMouseOnButton())
+	int end = messages.size() - messageStartOffset;
+
+	for (int i = messageStart - messageStartOffset; i < end; i++)
 	{
-		drawRectangleColorFilled(Mouse::getViewX()/2 - 67, Mouse::getViewY()/2, Mouse::getViewX()/2, Mouse::getViewY()/2 + 9, 1, c_white, c_black);
-		drawText(Mouse::getViewX()/2 + 2 - 67, Mouse::getViewY()/2, "Print Room Registry", "fnt_main", c_white, none, c_null, 0.5, 0.5);
+		drawText(10, 209 - 9*(messages.size() - messageStartOffset - i), "< System > " + messages[i], "fnt_main", c_white, full, c_black, 0.5, 0.5);
 	}
+}
+
+void Debug::addMessage(std::string message)
+{
+	messages.push_back(message);
+	messageStartOffset = 0;
 }

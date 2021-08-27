@@ -21,6 +21,7 @@ enum DebugInfo
 	mouseDeltaX,
 	mouseDeltaY,
 	mouseWheelDelta,
+	amogusModeButton,
 
 	printRoomRegistry,
 	printFontRegistry,
@@ -36,10 +37,16 @@ class Debug
 		void update(void);
 		void draw(void);
 		static bool boolButtonHitboxes;
+		static void addMessage(std::string message);
 
 	private:
 		std::map<DebugInfo, Text*> textMap;
 		std::map<DebugInfo, Button*> buttonMap;
-		bool clickedButton = false;	
+		bool clickedButton = false;
+		static std::vector<std::string> messages;
+		int messageStart;
+		static int messageStartOffset;
+		int maxNumberOfMessages = 4;
+		static bool amogusMode;
 };
 

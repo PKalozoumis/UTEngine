@@ -8,8 +8,8 @@ class SpriteButton : public Button
 		Sprite sprite, spriteNormal, spriteHover, spritePressed;
 
 	public:
-		SpriteButton(std::string directory, int x = 0, int y = 0);
-		SpriteButton(Sprite sprite, int x = 0, int y = 0);
+		SpriteButton(std::string directory, std::string label = "", std::string message = "", int x = 0, int y = 0);
+		SpriteButton(Sprite sprite, std::string label = "", std::string message = "", int x = 0, int y = 0);
 
 		void setSprite(Sprite sprite);
 		void draw(void);

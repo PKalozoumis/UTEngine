@@ -2,14 +2,12 @@
 #include "Sprite.h"
 #include "SDL.h"
 
-SpriteButton::SpriteButton(std::string directory, int x, int y):Button(x,y)
+SpriteButton::SpriteButton(std::string directory, std::string label, std::string message, int x, int y):Button(label,message,x,y)
 {
 	sprite = Sprite(directory);
 	spriteNormal = sprite;
 	spriteHover = Sprite("assets/sprites/debug/" + sprite.getName() + "Hover.png");
 	spritePressed = Sprite("assets/sprites/debug/" + sprite.getName() + "Pressed.png"),
-	
-	//spriteHover.setTexture("assets/sprites/debug/" + name + "Hover.png");
 
 	SDL_QueryTexture(sprite.getTexture(), nullptr, nullptr, &border.w, &border.h);
 
@@ -17,14 +15,12 @@ SpriteButton::SpriteButton(std::string directory, int x, int y):Button(x,y)
 	border.h *= 2;
 }
 
-SpriteButton::SpriteButton(Sprite sprite, int x, int y):Button(x,y)
+SpriteButton::SpriteButton(Sprite sprite, std::string label, std::string message, int x, int y):Button(label,message,x,y)
 {
 	this->sprite = sprite;
 	spriteNormal = sprite;
 	spriteHover = Sprite("assets/sprites/debug/" + sprite.getName() + "Hover.png");
 	spritePressed = Sprite("assets/sprites/debug/" + sprite.getName() + "Pressed.png"),
-	
-	//spriteHover.setTexture("assets/sprites/debug/" + name + "Hover.png");
 
 	SDL_QueryTexture(sprite.getTexture(), nullptr, nullptr, &border.w, &border.h);
 

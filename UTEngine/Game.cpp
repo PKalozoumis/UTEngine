@@ -363,11 +363,6 @@ void Game::update(void)
 		textVector.push_back(new Text(2, 0 , testStr, "fnt_main", c_white, full, c_red, 1, 1, false));
 	}
 
-	if (Controller::buttonPressed(SDL_SCANCODE_S)) //Save the game
-	{
-		save();
-	}
-
 	if (Controller::buttonPressed(SDL_SCANCODE_D))
 	{
 		if (!textVector.empty())

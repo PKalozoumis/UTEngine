@@ -9,8 +9,11 @@ class Button
 		bool mouseOnButton = false;
 		bool pressed = false;
 
+	private:
+		std::string label, message;
+
 	public:
-		Button(int x=0, int y=0, int w=0, int h=0);
+		Button(std::string label = "", std::string message = "", int x=0, int y=0, int w=0, int h=0);
 
 		virtual void update(void);
 		virtual void draw(void);

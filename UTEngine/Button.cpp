@@ -5,13 +5,16 @@
 #include "Mouse.h"
 #include "TextureManager.h"
 #include "Debug.h"
+#include "functions.h"
 
-Button::Button(int x, int y, int w, int h)
+Button::Button(std::string label, std::string message, int x, int y, int w, int h)
 {
 	border.x = x;
 	border.y = y;
 	border.w = w;
 	border.h = h;
+	this->label = label;
+	this->message = message;
 }
 
 void Button::update(void)
@@ -27,6 +30,11 @@ void Button::update(void)
 		pressed = true;
 	}
 	else pressed = false;
+
+	if (pressed)
+	{
+		Debug::addMessage(message);
+	}
 }
 
 void Button::draw(void)
@@ -39,6 +47,22 @@ void Button::draw(void)
 		tempBorder.h/=2;
 		SDL_RenderDrawRect(Game::renderer, &tempBorder);
 		drawResetColor();
+	}
+
+	int labelWidth = label.length()*4.5;
+
+	int x1 = Mouse::getViewX()/2;
+	int y1 = Mouse::getViewY()/2;
+
+	if (mouseOnButton && (label != ""))
+	{
+		if (x1 + labelWidth >= 320)
+		{
+			x1 -= labelWidth;
+		}
+
+		drawRectangleColorFilled(x1, y1, x1 + labelWidth, y1 + 9, 1, c_white, c_black);
+		drawText(x1 + 2, y1, label, "fnt_main", c_white, none, c_null, 0.5, 0.5);
 	}
 }
 

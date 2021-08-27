@@ -247,7 +247,7 @@ void Debug::draw(void)
 
 	for (int i = messageStart - messageStartOffset; i < end; i++)
 	{
-		drawText(10, 209 - 9*(messages.size() - messageStartOffset - i), "< System > " + messages[i], "fnt_main", c_white, full, c_black, 0.5, 0.5);
+		drawText(10, 209 - 9*(messages.size() - messageStartOffset - i), std::to_string(i) + " < System > " + messages[i], "fnt_main", c_white, full, c_black, 0.5, 0.5);
 	}
 }
 

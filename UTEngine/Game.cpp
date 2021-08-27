@@ -259,37 +259,38 @@ void Game::handleEvents(void)
 
 	SDL_JoystickEventState(SDL_ENABLE);
 
-	SDL_PollEvent(&event);
-
-	switch(event.type)
+	while (SDL_PollEvent(&event) != 0) 
 	{
-		/*case SDL_JOYAXISMOTION:
+		switch(event.type)
 		{
-			if (event.jaxis.axis == 0)
+			/*case SDL_JOYAXISMOTION:
 			{
-				if ((event.jaxis.value > -8000) && (event.jaxis.value < 8000)) 
+				if (event.jaxis.axis == 0)
 				{
-					player.getComponent<TransformComponent>().setVx(0);
-				}
-				else
-				{
-					if ((event.jaxis.value > 0) && (player.getComponent<TransformComponent>().getVx() != -1))
+					if ((event.jaxis.value > -8000) && (event.jaxis.value < 8000)) 
 					{
-						player.getComponent<TransformComponent>().setVx(1);
+						player.getComponent<TransformComponent>().setVx(0);
 					}
-					else if (event.jaxis.value < 0)
+					else
 					{
-						player.getComponent<TransformComponent>().setVx(-1);
+						if ((event.jaxis.value > 0) && (player.getComponent<TransformComponent>().getVx() != -1))
+						{
+							player.getComponent<TransformComponent>().setVx(1);
+						}
+						else if (event.jaxis.value < 0)
+						{
+							player.getComponent<TransformComponent>().setVx(-1);
+						}
 					}
 				}
 			}
+			break;*/
+
+			case SDL_MOUSEWHEEL: Mouse::setWheelDelta(event.wheel.y); break;
+
+			case SDL_QUIT: isRunning = false; break;
+			default: break;
 		}
-		break;*/
-
-		case SDL_MOUSEWHEEL: Mouse::setWheelDelta(event.wheel.y); break;
-
-		case SDL_QUIT: isRunning = false; break;
-		default: break;
 	}
 }
 

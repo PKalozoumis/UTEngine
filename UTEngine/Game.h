@@ -17,6 +17,7 @@
 #include <vector>
 #include "Text.h"
 #include "Debug.h"
+#include "SDL_mixer.h"
 
 class Room;
 

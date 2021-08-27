@@ -4,6 +4,7 @@
 #include "Text.h"
 #include <map>
 #include "Button.h"
+#include "SDL_mixer.h"
 
 enum DebugInfo
 {
@@ -22,6 +23,7 @@ enum DebugInfo
 	mouseDeltaY,
 	mouseWheelDelta,
 	amogusModeButton,
+	debugAmogusSound,
 
 	printRoomRegistry,
 	printFontRegistry,
@@ -48,5 +50,6 @@ class Debug
 		static int messageStartOffset;
 		int maxNumberOfMessages = 4;
 		static bool amogusMode;
+		static Mix_Chunk* testSound;
 };
 

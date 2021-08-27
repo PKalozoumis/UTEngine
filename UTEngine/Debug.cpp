@@ -11,11 +11,13 @@
 #include "Sprite.h"
 #include "SpriteButton.h"
 #include <vector>
+#include "SDL_mixer.h"
 
 bool Debug::boolButtonHitboxes = false;
 std::vector<std::string> Debug::messages;
 int Debug::messageStartOffset = 0;
 bool Debug::amogusMode = false;
+Mix_Chunk* Debug::testSound;
 
 void Debug::init(void)
 {
@@ -142,6 +144,9 @@ void Debug::init(void)
 
 	//Save the game
 	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(saveTheGame, new SpriteButton("assets/sprites/debug/sprDebugSave.png", "Save", "Game saved", 295, 105)));
+
+	//Amogus sound
+	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(debugAmogusSound, new SpriteButton("assets/sprites/debug/sprDebugAmogusSound.png", "???", "AMONG US!!!!!", 295, 130)));
 }
 
 void Debug::update(void)
@@ -211,6 +216,12 @@ void Debug::update(void)
 		if (buttonMap[amogusModeButton]->isPressed())
 			amogusMode = !amogusMode;
 
+		if (buttonMap[debugAmogusSound]->isPressed())
+		{
+			Mix_Chunk* snd = Mix_LoadWAV("assets/sounds/snd_amongus.wav");
+			Mix_PlayChannel(-1, snd, 0);
+		}
+
 	messageStart = (messages.size() >= maxNumberOfMessages)?(messages.size()-maxNumberOfMessages):(0);
 
 	if (Mouse::getWheelDelta() < 0)
@@ -247,7 +258,7 @@ void Debug::draw(void)
 
 	for (int i = messageStart - messageStartOffset; i < end; i++)
 	{
-		drawText(10, 209 - 9*(messages.size() - messageStartOffset - i), std::to_string(i) + " < System > " + messages[i], "fnt_main", c_white, full, c_black, 0.5, 0.5);
+		drawText(10, 209 - 9*(messages.size() - messageStartOffset - i), /*std::to_string(i) + " " + */"< System > " + messages[i], "fnt_main", c_white, full, c_black, 0.5, 0.5);
 	}
 }
 

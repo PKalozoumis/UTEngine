@@ -28,6 +28,8 @@
 #include "Debug.h"
 #include "Button.h"
 #include "Mouse.h"
+#include "SDL_mixer.h"
+#include <stdio.h>
 
 #pragma warning(disable : 4996) //Allows me to get appdata path with getenv
 
@@ -197,6 +199,17 @@ void Game::init(std::string title, int xpos, int ypos, int width, int height, bo
 		isRunning = false;
 	}
 
+	//Mixer
+	if (Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+	{
+		std::cout << "MIXER INITIALIZATION FAILURE" << std::endl;
+		isRunning = false;
+	}
+	else
+	{
+		std::cout << "MIXER INITIALIZED SUCCESSFULLY" << std::endl;
+	}
+
 	loadJoysticks();
 
 	#pragma endregion
@@ -296,6 +309,14 @@ void Game::handleEvents(void)
 
 void Game::update(void)
 {
+	Mix_Music* testMus = Mix_LoadMUS("assets/music/mus_ruins.ogg");
+
+	if( Mix_PlayingMusic() == 0 )
+	{
+		//Play the music
+		Mix_PlayMusic(testMus, -1 );
+	}
+
 	#pragma region ================================== INPUT ==================================
 
 	#pragma region Debug

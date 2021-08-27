@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include <iostream>
 #include "color.h"
+#include "Text.h"
 
 nlohmann::json jsonLoad(std::string filename);
 
@@ -14,6 +15,8 @@ SDL_Rect* createRectangle(int x, int y, int width, int height);
 void drawRectangle(int x1, int y1, int x2, int y2, int thickness);
 
 void drawRectangleColor(int x1, int y1, int x2, int y2, int thickness, SDL_Color color);
+
+void drawRectangleColorFilled(int x1, int y1, int x2, int y2, int thickness, SDL_Color outlineColor, SDL_Color fillColor);
 
 inline void drawResetColor(void);
 
@@ -40,4 +43,6 @@ int sign(T val)
 }
 
 void cycle(int& value, int min, int max, bool minInclude, bool maxInclude, bool loop, std::string axis, int amount = 1);
+
+void drawText(int x, int y, std::string text, std::string font = "fnt_main", SDL_Color textColor = c_white, OutlineType outlineType = full, SDL_Color outlineColor = c_null, float xscale = 1, float yscale = 1);
 

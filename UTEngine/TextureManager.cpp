@@ -4,7 +4,7 @@
 
 SDL_Texture* TextureManager::loadTexture(std::string directory)
 {
-	SDL_Surface* tempSurface = IMG_Load(&directory[0]);
+	SDL_Surface* tempSurface = IMG_Load(directory.c_str());
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(Game::renderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
 

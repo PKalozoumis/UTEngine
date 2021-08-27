@@ -7,6 +7,7 @@
 #include "color.h"
 #include <cmath>
 #include "Controller.h"
+#include "Text.h"
 
 nlohmann::json jsonLoad(std::string filename)
 {
@@ -49,36 +50,54 @@ void drawRectangle(int x1, int y1, int x2, int y2, int thickness)
 {
     drawSetColor(c_white);
 
-    if(thickness != 0)
+    if(thickness > 0)
     {
         for(int i = 0; i < thickness; i++)
         {
             SDL_RenderDrawRect(Game::renderer, createRectangle(x1 + i, y1 + i, x2-x1 - 2*i, y2-y1 - 2*i));
         }
     }
-    else SDL_RenderFillRect(Game::renderer, createRectangle(x1, y1, x2-x1, y2-y1));
+   // else SDL_RenderFillRect(Game::renderer, createRectangle(x1, y1, x2-x1, y2-y1));
 
     drawResetColor();
 }
 
 void drawMenuBox(int x1, int y1, int x2, int y2)
 {
-    drawRectangleColor(x1, y1, x2, y2, 0, c_black);
-    drawRectangleColor(x1, y1, x2, y2, 3, c_white);
+    drawRectangleColorFilled(x1,y1,x2,y2,3,c_white,c_black);
 }
 
 void drawRectangleColor(int x1, int y1, int x2, int y2, int thickness, SDL_Color c)
 {
     drawSetColor(c);
 
-    if(thickness != 0)
+    if(thickness > 0)
     {
         for(int i = 0; i < thickness; i++)
         {
             SDL_RenderDrawRect(Game::renderer, createRectangle(x1 + i, y1 + i, x2-x1 - 2*i, y2-y1 - 2*i));
         }
     }
-    else SDL_RenderFillRect(Game::renderer, createRectangle(x1, y1, x2-x1, y2-y1));
+    //else SDL_RenderFillRect(Game::renderer, createRectangle(x1, y1, x2-x1, y2-y1));
+
+    drawResetColor();
+}
+
+void drawRectangleColorFilled(int x1, int y1, int x2, int y2, int thickness, SDL_Color outlineColor, SDL_Color fillColor)
+{
+    drawSetColor(fillColor);
+
+    SDL_RenderFillRect(Game::renderer, createRectangle(x1, y1, x2-x1, y2-y1));
+
+    drawSetColor(outlineColor);
+
+    if(thickness > 0)
+    {
+        for(int i = 0; i < thickness; i++)
+        {
+            SDL_RenderDrawRect(Game::renderer, createRectangle(x1 + i, y1 + i, x2-x1 - 2*i, y2-y1 - 2*i));
+        }
+    }
 
     drawResetColor();
 }
@@ -158,4 +177,14 @@ void cycle(int& value, int min, int max, bool minInclude, bool maxInclude, bool 
         else if (loop)
             value = max;
     }
+}
+
+void drawText(int x, int y, std::string text, std::string font, SDL_Color textColor, OutlineType outlineType, SDL_Color outlineColor, float xscale, float yscale)
+{
+    Text* txt = new Text(x,y,text,font,textColor,outlineType,outlineColor,xscale,yscale,true);
+
+    txt->update();
+    txt->draw();
+
+    delete txt;
 }

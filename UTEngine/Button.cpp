@@ -3,6 +3,8 @@
 #include "Game.h"
 #include <iostream>
 #include "Mouse.h"
+#include "TextureManager.h"
+#include "Debug.h"
 
 Button::Button(int x, int y, int w, int h)
 {
@@ -14,23 +16,30 @@ Button::Button(int x, int y, int w, int h)
 
 void Button::update(void)
 {
-	if ((withinRange(Mouse::getViewX(), border.x, border.x + border.w))&&(withinRange(Mouse::getViewY(), border.y, border.y + border.h)))
+	if ((withinRange(Mouse::getViewX(), border.x*2, border.x*2 + border.w))&&(withinRange(Mouse::getViewY(), border.y*2, border.y*2 + border.h)))
 	{
 		mouseOnButton = true;
 	}
 	else mouseOnButton = false;
+
+	if (mouseOnButton && Mouse::buttonPressed(SDL_BUTTON_LMASK))
+	{
+		pressed = true;
+	}
+	else pressed = false;
 }
 
 void Button::draw(void)
 {
-	drawSetColor(c_lime);
-	SDL_Rect tempBorder = border;
-	tempBorder.x/=2;
-	tempBorder.y/=2;
-	tempBorder.w/=2;
-	tempBorder.h/=2;
-	SDL_RenderDrawRect(Game::renderer, &tempBorder);
-	drawResetColor();
+	if (Debug::boolButtonHitboxes)
+	{
+		drawSetColor(c_lime);
+		SDL_Rect tempBorder = border;
+		tempBorder.w/=2;
+		tempBorder.h/=2;
+		SDL_RenderDrawRect(Game::renderer, &tempBorder);
+		drawResetColor();
+	}
 }
 
 bool Button::checkMouseOnButton(void) const
@@ -51,4 +60,9 @@ void Button::setWidth(int width)
 void Button::setBorder(SDL_Rect rect)
 {
 	border = rect;
+}
+
+bool Button::isPressed(void)
+{
+	return pressed;
 }

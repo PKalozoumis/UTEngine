@@ -1,18 +1,19 @@
 #pragma once
-
 #include "SDL.h"
+#include <iostream>
 
 class Button
 {
-	private:
+	protected:
 		SDL_Rect border;
 		bool mouseOnButton = false;
+		bool pressed = false;
 
 	public:
 		Button(int x=0, int y=0, int w=0, int h=0);
 
-		void update(void);
-		void draw(void);
+		virtual void update(void);
+		virtual void draw(void);
 
 		bool checkMouseOnButton(void) const;
 
@@ -20,5 +21,7 @@ class Button
 		void setHeight(int height);
 
 		void setBorder(SDL_Rect rect);
+
+		bool isPressed(void);
 };
 

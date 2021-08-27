@@ -73,13 +73,15 @@ class Game
 		static std::string getRoomFilename(void);
 		static std::string getRoomName(void);
 
+		static void save(void);
+
 	private:
 		std::vector<Text*> textVector;
 
 		int screenshotWidth, screenshotHeight;
-		std::string mainPath;
-		std::string savePath;
-		std::string screenshotPath;
+		static std::string mainPath;
+		static std::string savePath;
+		static std::string screenshotPath;
 		unsigned int gameTime = 0;
 		bool isRunning;
 		std::vector<SDL_Joystick*> joysticks;

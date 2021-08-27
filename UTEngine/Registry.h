@@ -9,7 +9,7 @@ class Registry
 	private:
 		std::map<keyType, valueType> reg; //For retrieval from key
 		std::string name;
-		std::vector<valueType> vec; //For existence checking and retrieval from index
+		std::vector<valueType> vec; //For existence checking and retrieval from index. Items are ordered
 		int values = 0;
 
 	public:

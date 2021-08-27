@@ -237,26 +237,28 @@ void Text::update(void)
 	pos.w = trueWidth*xscale;
 	pos.h = trueHeight*yscale;
 
-	if (line > 3)
-	{
-		textboxPos.y = 5;
-	}
-	else textboxPos.y = 160 - 155*(Game::getPlayerPosInView());
-
 	if (!simpleText)
 	{
+
+		if (line > 3)
+		{
+			textboxPos.y = 5;
+		}
+		else textboxPos.y = 160 - 155*(Game::getPlayerPosInView());
+
+	
 		pos.x = textboxPos.x + xgap;
 		pos.y = textboxPos.y + ygap;
+
+		if (alarm == -1)
+		alarm = 1;
+
+		if (alarm == 0)
+			alarm = 1;
+
+		if (alarm - 1 >= 0)
+			alarm--;
 	}
-
-	if (alarm == -1)
-		alarm = 1;
-
-	if (alarm == 0)
-		alarm = 1;
-
-	if (alarm - 1 >= 0)
-		alarm--;
 }
 
 void Text::draw(void)
@@ -319,7 +321,7 @@ Text::~Text(void)
 	SDL_DestroyTexture(outlineTexture);
 	SDL_DestroyTexture(texture);
 
-	std::cout << "DESTROYED TEXT" << std::endl;
+	//std::cout << "DESTROYED TEXT" << std::endl;
 }
 
 void Text::setScale(float xscale, float yscale)

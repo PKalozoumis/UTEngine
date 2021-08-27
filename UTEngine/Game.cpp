@@ -50,6 +50,9 @@ int Game::ybor = 120;
 bool Game::playerPosInView = 0;
 TransformComponent* Game::playerTransform;
 SpriteComponent* Game::playerSprite;
+std::string Game::savePath;
+std::string Game::screenshotPath;
+std::string Game::mainPath;
 
 Text* testText;
 
@@ -362,17 +365,7 @@ void Game::update(void)
 
 	if (Controller::buttonPressed(SDL_SCANCODE_S)) //Save the game
 	{
-		int px = playerTransform->getX();
-		int py = playerTransform->getY();
-
-		std::ofstream savefile(savePath + "playerPos.json");
-
-		nlohmann::json j;
-		j["x"] = px;
-		j["y"] = py;
-		savefile << j;
-
-		savefile.close();
+		save();
 	}
 
 	if (Controller::buttonPressed(SDL_SCANCODE_D))
@@ -596,6 +589,7 @@ void Game::endFrame(void)
 {
 	toggledFullscreen = false;
 	event.wheel.y = 0;
+	Mouse::setWheelDelta(0);
 }
 
 void Game::clean(void)
@@ -680,6 +674,23 @@ std::string Game::getRoomName(void)
 std::string Game::getRoomFilename(void)
 {
 	return currentRoom->getFilename();
+}
+
+void Game::save(void)
+{
+	int px = playerTransform->getX();
+	int py = playerTransform->getY();
+
+	std::ofstream savefile(savePath + "playerPos.json");
+
+	nlohmann::json j;
+	j["x"] = px;
+	j["y"] = py;
+	savefile << j;
+
+	savefile.close();
+
+	std::cout << "Game saved!" << std::endl;
 }
 
 

@@ -191,6 +191,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteButton.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="Room.cpp" />
@@ -212,6 +214,8 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Registry.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteButton.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="resource.h" />

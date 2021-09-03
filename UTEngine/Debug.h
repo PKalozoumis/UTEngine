@@ -3,8 +3,8 @@
 #include <iostream>
 #include "Text.h"
 #include <map>
-#include "Button.h"
 #include "SDL_mixer.h"
+#include "DetectableArea.h"
 
 enum DebugInfo
 {
@@ -23,33 +23,40 @@ enum DebugInfo
 	mouseDeltaY,
 	mouseWheelDelta,
 	amogusModeButton,
-	debugAmogusSound,
+	debugShowCameraBorders,
+	debugMaxMessages,
 
 	printRoomRegistry,
 	printFontRegistry,
 	printTileRegistry,
 	printTilesetRegistry,
-	saveTheGame
+	debugPrintMusicRegistry,
+	debugPrintSoundRegistry,
+	saveTheGame,
+
+	debugMessageScrollArea
 };
 
 class Debug
 {
 	public:
-		void init(void);
-		void update(void);
-		void draw(void);
+		static void init(void);
+		static void update(void);
+		static void draw(void);
 		static bool boolButtonHitboxes;
 		static void addMessage(std::string message);
 
 	private:
-		std::map<DebugInfo, Text*> textMap;
-		std::map<DebugInfo, Button*> buttonMap;
-		bool clickedButton = false;
+		static std::map<DebugInfo, Text*> textMap;
+		static std::map<DebugInfo, DetectableArea*> buttonMap;
+		static bool clickedButton;
 		static std::vector<std::string> messages;
-		int messageStart;
+		static int messageStart;
 		static int messageStartOffset;
-		int maxNumberOfMessages = 4;
+		static int maxNumberOfMessages;
 		static bool amogusMode;
-		static Mix_Chunk* testSound;
+		static bool showCameraBorders;
+
+		static bool debugButtonPressed(DebugInfo button);
 };
 

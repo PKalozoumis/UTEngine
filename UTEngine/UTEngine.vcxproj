@@ -184,6 +184,7 @@
     <ClCompile Include="color.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="DetectableArea.cpp" />
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="functions.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -191,6 +192,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Music.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteButton.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -207,13 +210,16 @@
     <ClInclude Include="color.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="DetectableArea.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Music.h" />
     <ClInclude Include="Registry.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteButton.h" />
     <ClInclude Include="Text.h" />

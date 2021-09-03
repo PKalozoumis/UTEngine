@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "color.h"
 #include <vector>
+#include "amogus.h"
 
 extern int deltaTime;
 

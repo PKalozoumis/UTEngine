@@ -16,8 +16,13 @@
 bool Debug::boolButtonHitboxes = false;
 std::vector<std::string> Debug::messages;
 int Debug::messageStartOffset = 0;
+int Debug::messageStart;
+int Debug::maxNumberOfMessages = 4;
 bool Debug::amogusMode = false;
-Mix_Chunk* Debug::testSound;
+bool Debug::showCameraBorders = false;
+std::map<DebugInfo, Text*> Debug::textMap;
+std::map<DebugInfo, DetectableArea*> Debug::buttonMap;
+bool Debug::clickedButton = false;
 
 void Debug::init(void)
 {
@@ -63,7 +68,7 @@ void Debug::init(void)
 		new Text(2, 5*9, "", "fnt_main", c_white, full, c_black, 0.5, 0.5, true)
 	));
 
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(buttonHitboxes, new Button("Toggle Button Hitboxes", "Toggled button hitboxes", 295, 5, 40,40)));
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(buttonHitboxes, new Button("Toggle Button Hitboxes", "Toggled button hitboxes", 295, 5, 40,40)));
 	
 	//Last Pressed
 	textMap.insert(std::map<DebugInfo, Text*>::value_type
@@ -128,25 +133,49 @@ void Debug::init(void)
 		new Text(2, 14*9, "", "fnt_main", c_white, full, c_black, 0.5, 0.5, true)
 	));
 
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(amogusModeButton, new Button("Toggle Amogus Mode", "Toggled Amogus Mode")));
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(amogusModeButton, new Button("Toggle Amogus Mode", "Toggled Amogus Mode")));
+
+	//Show camera borders
+	textMap.insert(std::map<DebugInfo, Text*>::value_type
+	(
+		debugShowCameraBorders,
+		new Text(2, 15*9, "", "fnt_main", c_white, full, c_black, 0.5, 0.5, true)
+	));
+
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(debugShowCameraBorders, new Button("Toggle Camera Borders", "Toggled Camera Borders")));
+
+	//Max messages
+	textMap.insert(std::map<DebugInfo, Text*>::value_type
+	(
+		debugMaxMessages,
+		new Text(2, 16*9, "", "fnt_main", c_white, full, c_black, 0.5, 0.5, true)
+	));
+
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(debugMaxMessages, new Button("Set Max Messages", "")));
 
 	//Room registry
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printRoomRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintRooms.png", "Print Room Registry", "Printed room registry", 295, 5)));
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(printRoomRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintRooms.png", "Print Room Registry", "Printed room registry", 295, 5)));
 
 	//Font registry
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printFontRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintFonts.png", "Print Font Registry", "Printed font registry", 295, 30)));
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(printFontRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintFonts.png", "Print Font Registry", "Printed font registry", 295, 30)));
 
 	//Tile registry
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printTileRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintTiles.png", "Print Tile Registry", "Printed tile registry", 295, 55)));
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(printTileRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintTiles.png", "Print Tile Registry", "Printed tile registry", 295, 55)));
 
 	//Tileset registry
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(printTilesetRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintTilesets.png", "Print Tileset Registry", "Printed tileset registry", 295, 80)));
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(printTilesetRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintTilesets.png", "Print Tileset Registry", "Printed tileset registry", 295, 80)));
+
+	//Music registry
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(debugPrintMusicRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintMusic.png", "Print Music Registry", "Printed music registry", 295, 105)));
+
+	//Sound registry
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(debugPrintSoundRegistry, new SpriteButton("assets/sprites/debug/sprDebugPrintSounds.png", "Print Sound Registry", "Printed sound registry", 295, 130)));
 
 	//Save the game
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(saveTheGame, new SpriteButton("assets/sprites/debug/sprDebugSave.png", "Save", "Game saved", 295, 105)));
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(saveTheGame, new SpriteButton("assets/sprites/debug/sprDebugSave.png", "Save", "Game saved", 295, 155)));
 
-	//Amogus sound
-	buttonMap.insert(std::map<DebugInfo, Button*>::value_type(debugAmogusSound, new SpriteButton("assets/sprites/debug/sprDebugAmogusSound.png", "???", "AMONG US!!!!!", 295, 130)));
+	//Message scroll area
+	buttonMap.insert(std::map<DebugInfo, DetectableArea*>::value_type(debugMessageScrollArea, new DetectableArea("", 18, 170, 110, 40)));
 }
 
 void Debug::update(void)
@@ -182,12 +211,21 @@ void Debug::update(void)
 	textMap[mouseDeltaY]->refreshText("Mouse Delta Y: " + std::to_string(Mouse::getDeltaY()));
 	textMap[mouseWheelDelta]->refreshText("Mouse Wheel Delta: " + std::to_string(Mouse::getWheelDelta()));
 	textMap[amogusModeButton]->refreshText("Amogus Mode: " + std::to_string(amogusMode));
+	textMap[debugShowCameraBorders]->refreshText("Show Camera Borders: " + std::to_string(showCameraBorders));
+	textMap[debugMaxMessages]->refreshText("Max Num of Messages On View: " + std::to_string(maxNumberOfMessages));
+
+	static_cast<Button*>(buttonMap[amogusModeButton])->setMessage("Set Amogus Mode to " + std::to_string(!amogusMode));
+	static_cast<Button*>(buttonMap[buttonHitboxes])->setMessage("Set Button Hitboxes to " + std::to_string(!boolButtonHitboxes));
+	static_cast<Button*>(buttonMap[debugShowCameraBorders])->setMessage("Set Camera Borders to " + std::to_string(!showCameraBorders));
 
 	for (auto& pair : buttonMap)
 	{
 		if (textMap.count(pair.first) > 0)
 		{
-			pair.second->setBorder(textMap[pair.first]->getPos());
+			SDL_Rect tempPos = textMap[pair.first]->getPos();
+			tempPos.w /= 2;
+			tempPos.h /= 2;
+			pair.second->setPos(tempPos);
 		}
 
 		pair.second->update();
@@ -195,53 +233,66 @@ void Debug::update(void)
 
 	//Button actions
 
-		if (buttonMap[printRoomRegistry]->isPressed())
+		if (debugButtonPressed(printRoomRegistry))
 			Game::roomRegistry.printOrdered();
 
-		if (buttonMap[buttonHitboxes]->isPressed())
+		if (debugButtonPressed(buttonHitboxes))
 			boolButtonHitboxes = !boolButtonHitboxes;
 
 		//if (buttonMap[printFontRegistry]->isPressed())
 			//Game::fontRegistry.printOrdered();
 
-		if (buttonMap[printTileRegistry]->isPressed())
+		if (debugButtonPressed(printTileRegistry))
 			Game::tileRegistry.printOrdered();
 
-		if (buttonMap[printTilesetRegistry]->isPressed())
+		if (debugButtonPressed(printTilesetRegistry))
 			Game::tilesetRegistry.printOrdered();
 
-		if (buttonMap[saveTheGame]->isPressed())
+		if (debugButtonPressed(debugPrintMusicRegistry))
+			Game::musicRegistry.printOrdered();
+
+		if (debugButtonPressed(saveTheGame))
 			Game::save();
 
-		if (buttonMap[amogusModeButton]->isPressed())
+		if (debugButtonPressed(amogusModeButton))
 			amogusMode = !amogusMode;
 
-		if (buttonMap[debugAmogusSound]->isPressed())
+		if (debugButtonPressed(debugShowCameraBorders))
+			showCameraBorders = !showCameraBorders;
+
+		if (debugButtonPressed(debugPrintSoundRegistry))
+			Game::soundRegistry.printOrdered();
+
+		if (buttonMap[debugMessageScrollArea]->mouseInArea())
 		{
-			Mix_Chunk* snd = Mix_LoadWAV("assets/sounds/snd_amongus.wav");
-			Mix_PlayChannel(-1, snd, 0);
+			if (Mouse::getWheelDelta() < 0)
+			{
+				if (messageStartOffset - 1 >=0)
+				{
+					messageStartOffset--;
+				}
+			}
+			else if (Mouse::getWheelDelta() > 0)
+			{
+				if (messageStartOffset + 1 <= messageStart)
+				{
+					messageStartOffset++;
+				}
+			}
 		}
 
 	messageStart = (messages.size() >= maxNumberOfMessages)?(messages.size()-maxNumberOfMessages):(0);
-
-	if (Mouse::getWheelDelta() < 0)
-	{
-		if (messageStartOffset - 1 >=0)
-		{
-			messageStartOffset--;
-		}
-	}
-	else if (Mouse::getWheelDelta() > 0)
-	{
-		if (messageStartOffset + 1 <= messageStart)
-		{
-			messageStartOffset++;
-		}
-	}
 }
 
 void Debug::draw(void)
 {
+	if (showCameraBorders)
+	{
+		drawRectangleColor(-Game::camera.x, - Game::camera.y, Game::getRoomWidth() - Game::camera.x, Game::getRoomHeight() - Game::camera.y, 1, c_lime);
+		drawRectangleColor(-Game::camera.x, 120 - Game::camera.y, Game::getRoomWidth(), Game::getRoomHeight() - 120 - Game::camera.y, 1, c_blue);
+		drawRectangleColor(160 - Game::camera.x, - Game::camera.y, Game::getRoomWidth() - 160 - Game::camera.x, Game::getRoomHeight(), 1, c_red);
+	}
+
 	for (auto& pair : textMap)
 	{
 		pair.second->draw();
@@ -252,13 +303,24 @@ void Debug::draw(void)
 		pair.second->draw();
 	}
 
+	//Input box
 	drawRectangleColorFilled(10, 210, 310, 235, 3, c_gray, c_black);
 
+	//Messages
 	int end = messages.size() - messageStartOffset;
 
 	for (int i = messageStart - messageStartOffset; i < end; i++)
 	{
-		drawText(10, 209 - 9*(messages.size() - messageStartOffset - i), /*std::to_string(i) + " " + */"< System > " + messages[i], "fnt_main", c_white, full, c_black, 0.5, 0.5);
+		drawText(20, 209 - 9*(messages.size() - messageStartOffset - i), /*std::to_string(i) + " " + */"< System > " + messages[i], "fnt_main", c_white, full, c_black, 0.5, 0.5);
+	}
+
+	//Scrollbar
+
+	if (messages.size() > 0)
+	{
+		drawRectangleColorFilled(10, 172, 17, 208, 1, c_white, c_black);
+		int add = (messages.size() > 3)?(34/(messages.size()-3)):(34);
+		drawRectangleColorFilled(11, 173, 16, 173 + add, 1, c_black, c_gray);
 	}
 }
 
@@ -266,4 +328,10 @@ void Debug::addMessage(std::string message)
 {
 	messages.push_back(message);
 	messageStartOffset = 0;
+}
+
+bool Debug::debugButtonPressed(DebugInfo button)
+{
+	if (buttonMap.find(button) != buttonMap.end())
+		return static_cast<Button*>(buttonMap[button])->isPressed();
 }

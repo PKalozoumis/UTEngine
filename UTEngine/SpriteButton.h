@@ -12,7 +12,7 @@ class SpriteButton : public Button
 		SpriteButton(Sprite sprite, std::string label = "", std::string message = "", int x = 0, int y = 0);
 
 		void setSprite(Sprite sprite);
-		void draw(void);
+		void draw(void) const;
 		void update(void);
 };
 

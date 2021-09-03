@@ -18,6 +18,8 @@
 #include "Text.h"
 #include "Debug.h"
 #include "SDL_mixer.h"
+#include "Music.h"
+#include "Sound.h"
 
 class Room;
 
@@ -29,6 +31,8 @@ class Game
 		static Registry<std::string, Tile*> tileRegistry;
 		static Registry<std::string, Tileset*> tilesetRegistry;
 		static Registry<std::string, Room*> roomRegistry;
+		static Registry<std::string, Music*> musicRegistry;
+		static Registry<std::string, Sound*> soundRegistry;
 
 		static SDL_Window* window;
 		static SDL_Renderer* renderer;
@@ -53,6 +57,8 @@ class Game
 
 		void loadRooms(void);
 		void loadFonts(void);
+		void loadMusic(void);
+		void loadSounds(void);
 
 		void loadJoysticks(void);
 
@@ -73,6 +79,8 @@ class Game
 
 		static std::string getRoomFilename(void);
 		static std::string getRoomName(void);
+		static int getRoomWidth(void);
+		static int getRoomHeight(void);
 
 		static void save(void);
 
@@ -92,7 +100,6 @@ class Game
 		static TransformComponent* playerTransform;
 		static SpriteComponent* playerSprite;
 
-		Debug debug;
 		bool debugMode = false;
 };
 

@@ -1,29 +1,23 @@
 #pragma once
 #include "SDL.h"
+#include "DetectableArea.h"
 #include <iostream>
 
-class Button
+class Button : public DetectableArea
 {
 	protected:
-		SDL_Rect border;
-		bool mouseOnButton = false;
 		bool pressed = false;
 
 	private:
-		std::string label, message;
+		std::string message;
 
 	public:
 		Button(std::string label = "", std::string message = "", int x=0, int y=0, int w=0, int h=0);
 
-		virtual void update(void);
-		virtual void draw(void);
+		void update(void);
+		void draw(void) const;
 
-		bool checkMouseOnButton(void) const;
-
-		void setWidth(int width);
-		void setHeight(int height);
-
-		void setBorder(SDL_Rect rect);
+		void setMessage(std::string message);
 
 		bool isPressed(void);
 };

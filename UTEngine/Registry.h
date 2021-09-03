@@ -22,7 +22,8 @@ class Registry
 		{
 			if (!exists(key))
 			{
-				reg.insert(std::pair<keyType, valueType>(key, value));
+				//reg.insert(std::pair<keyType, valueType>(key, value));
+				reg.insert(std::map<keyType, valueType>::value_type(key, value));
 				vec.push_back(value);
 				values++;
 			}
@@ -67,79 +68,3 @@ class Registry
 			return values;
 		}
 };
-
-/*
-//Specialization for fonts, because I'm a fucking idiot
-template <typename T>
-class Registry<T, TTF_Font*>
-{
-	private:
-		std::map<T, TTF_Font*> reg;
-		std::string name;
-		std::vector<TTF_Font*> vec;
-		int values = 0;
-
-	public:
-		Registry(std::string name)
-		{
-			this->name = name;
-		}
-
-		~Registry(void)
-		{
-			for (auto font : vec)
-				TTF_CloseFont(font);
-
-			std::cout << "Deleted Font Registry" << std::endl;
-			vec.clear();
-		}
-		
-		void registration(T key, TTF_Font* value)
-		{
-			if (!exists(key))
-			{
-				reg.insert(std::pair<T, TTF_Font*>(key, value));
-				vec.push_back(value);
-				values++;
-			}
-			else std::cout << "Exists" << std::endl;
-		}
-
-		TTF_Font* get(int index)
-		{
-			return vec[index];
-		}
-
-		TTF_Font* operator[](T key)
-		{
-			return reg[key];
-		}
-
-		void print(void) const
-		{
-			std::cout << "==================== " + name + " ====================" << std::endl;
-			for (std::pair<T, TTF_Font*> pair : reg)
-			{
-				std::cout << pair.first << std::endl;
-			}
-		}
-
-		void printOrdered(void) const
-		{
-			std::cout << "==================== " + name + " (ORDERED) ====================" << std::endl;
-			for (auto x : vec)
-			{
-				std::cout << *x << std::endl;
-			}
-		}
-
-		bool exists(T key) const
-		{
-			return reg.count(key);
-		}
-
-		int size(void) const
-		{
-			return values;
-		}
-};*/

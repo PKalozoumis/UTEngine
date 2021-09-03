@@ -9,10 +9,7 @@ SpriteButton::SpriteButton(std::string directory, std::string label, std::string
 	spriteHover = Sprite("assets/sprites/debug/" + sprite.getName() + "Hover.png");
 	spritePressed = Sprite("assets/sprites/debug/" + sprite.getName() + "Pressed.png"),
 
-	SDL_QueryTexture(sprite.getTexture(), nullptr, nullptr, &border.w, &border.h);
-
-	border.w *= 2;
-	border.h *= 2;
+	SDL_QueryTexture(sprite.getTexture(), nullptr, nullptr, &pos.w, &pos.h);
 }
 
 SpriteButton::SpriteButton(Sprite sprite, std::string label, std::string message, int x, int y):Button(label,message,x,y)
@@ -22,15 +19,12 @@ SpriteButton::SpriteButton(Sprite sprite, std::string label, std::string message
 	spriteHover = Sprite("assets/sprites/debug/" + sprite.getName() + "Hover.png");
 	spritePressed = Sprite("assets/sprites/debug/" + sprite.getName() + "Pressed.png"),
 
-	SDL_QueryTexture(sprite.getTexture(), nullptr, nullptr, &border.w, &border.h);
-
-	border.w *= 2;
-	border.h *= 2;
+	SDL_QueryTexture(sprite.getTexture(), nullptr, nullptr, &pos.w, &pos.h);
 }
 
-void SpriteButton::draw(void)
+void SpriteButton::draw(void) const
 {
-	sprite.draw(border.x, border.y);
+	sprite.draw(pos.x, pos.y);
 	Button::draw();
 }
 
@@ -38,7 +32,7 @@ void SpriteButton::update(void)
 {
 	Button::update();
 
-	if (mouseOnButton)
+	if (boolMouseInArea)
 	{
 		if (pressed)
 		{

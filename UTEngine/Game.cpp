@@ -30,6 +30,8 @@
 #include "Mouse.h"
 #include "SDL_mixer.h"
 #include <stdio.h>
+#include "Music.h"
+#include "Sound.h"
 
 #pragma warning(disable : 4996) //Allows me to get appdata path with getenv
 
@@ -37,6 +39,8 @@ Registry<std::string, TTF_Font*> Game::fontRegistry("Font Registry");
 Registry<std::string, Tile*> Game::tileRegistry("Tile Registry");
 Registry<std::string, Tileset*> Game::tilesetRegistry("Tileset Registry");
 Registry<std::string, Room*> Game::roomRegistry("Room Registry");
+Registry<std::string, Music*> Game::musicRegistry("Music Registry");
+Registry<std::string, Sound*> Game::soundRegistry("Sound Registry");
 
 SDL_Window* Game::window = nullptr;
 SDL_Renderer* Game::renderer = nullptr;
@@ -85,6 +89,26 @@ void Game::loadRooms(void)
 		std::string filename = jsonToString(roomArray[id]["filename"]);
 
 		roomRegistry.registration(filename, new Room(id));
+	}
+}
+
+void Game::loadMusic(void)
+{
+	std::string path = "assets/music";
+
+	for (const auto& dir : std::filesystem::directory_iterator(path))
+	{
+		musicRegistry.registration(dir.path().stem().string(), new Music(dir.path()));
+	}
+}
+
+void Game::loadSounds(void)
+{
+	std::string path = "assets/sounds";
+
+	for (const auto& dir : std::filesystem::directory_iterator(path))
+	{
+		soundRegistry.registration(dir.path().stem().string(), new Sound(dir.path()));
 	}
 }
 
@@ -218,6 +242,8 @@ void Game::init(std::string title, int xpos, int ypos, int width, int height, bo
 
 	loadFonts();
 	loadRooms();
+	loadMusic();
+	loadSounds();
 
 	tileRegistry.registration("tile_air.png", new Tile("assets/sprites/tiles/tileset_air.json", 0));
 
@@ -262,7 +288,7 @@ void Game::init(std::string title, int xpos, int ypos, int width, int height, bo
 	#pragma endregion
 
 	Controller::init();
-	debug.init();
+	Debug::init();
 }
 
 void Game::handleEvents(void)
@@ -309,19 +335,15 @@ void Game::handleEvents(void)
 
 void Game::update(void)
 {
-	Mix_Music* testMus = Mix_LoadMUS("assets/music/mus_ruins.ogg");
-
 	if( Mix_PlayingMusic() == 0 )
 	{
 		//Play the music
-		Mix_PlayMusic(testMus, -1 );
+		Mix_PlayMusic(musicRegistry["mus_ruins"]->getMusic(), -1 );
 	}
 
 	#pragma region ================================== INPUT ==================================
 
 	#pragma region Debug
-
-	
 
 	if (Controller::buttonPressed(SDL_SCANCODE_1))
 		fontRegistry.print();
@@ -570,7 +592,7 @@ void Game::update(void)
 	}
 
 	if (debugMode)
-		debug.update();
+		Debug::update();
 
 	gameTime++;
 
@@ -586,10 +608,7 @@ void Game::render(void)
 	menu.draw();
 
 	if (debugMode)
-		debug.draw();
-	
-	//drawRectangleColor(-camera.x, - camera.y, currentRoom->getWidth() - camera.x, currentRoom->getHeight() - camera.y, 1, c_lime);
-	//drawRectangleColor(160 - camera.x, 120 - camera.y, currentRoom->getWidth() - 160 - camera.x, currentRoom->getHeight() - 120 - camera.y, 1, c_white);
+		Debug::draw();
 
 	//drawMenuBox(16, 160, 305, 236);
 	//drawMenuBox(16, -10, 305, 300);
@@ -691,6 +710,16 @@ std::string Game::getRoomName(void)
 std::string Game::getRoomFilename(void)
 {
 	return currentRoom->getFilename();
+}
+
+int Game::getRoomWidth(void)
+{
+	return currentRoom->getWidth();
+}
+
+int Game::getRoomHeight(void)
+{
+	return currentRoom->getHeight();
 }
 
 void Game::save(void)

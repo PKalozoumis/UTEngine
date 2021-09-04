@@ -4,7 +4,6 @@
 #include "SDL.h"
 #include "color.h"
 #include <vector>
-#include "amogus.h"
 
 extern int deltaTime;
 
@@ -28,30 +27,25 @@ class Text
 	private:
 		std::string text;
 		int textLength;
-		TTF_Font* font = nullptr;
-		SDL_Texture* texture = nullptr;
-		SDL_Texture* outlineTexture = nullptr;
-		SDL_Texture** textureArray;
-		SDL_Rect* positionArray;
-		TTF_Font** fontArray;
+		int trueWidth, trueHeight;
+		bool simpleText;
+
+		std::vector<char> letters;
+		std::vector<TTF_Font*> fonts;
+		std::vector<OutlineType> outlines;
+		std::vector<SDL_Color> colors, outlineColors;
+		std::vector<std::pair<int, int>> scale;
+		std::vector<SDL_Rect> positions;
 		std::vector<int> splitPos;
-		OutlineType outlineType;
+		
 		int alarm = -1;
+		int line = 0;
+		int currentLetterIndex = 0;
 
 		int maxChara = 33; //34 is the absolute MAX if you wanna be practical, it just looks ugly as hell
 		int spacing = 8;
-		float xscale, yscale;
-		int trueWidth, trueHeight;
 		int xgap = 14;
 		int ygap = 10;
-		int line = 0;
-
-		int currentLetterIndex = 0;
-
-		bool simpleText;
-		
-		SDL_Rect pos, outlinePos, textboxPos;
-		SDL_Color textColor, outlineColor;
 
 		bool createdOutline = false;
 		SDL_Color previousColor, previousOutlineColor;

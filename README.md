@@ -1,6 +1,6 @@
 # UTEngine
 
-STATUS: ABANDONED, BECAUSE I WANT TO DO BIGGER THINGS
+STATUS: ABANDONED
 
 A small game engine made for fun in C++ using SDL2, specifically designed for UNDERTALE fan-games.
 

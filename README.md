@@ -1,6 +1,6 @@
 # UTEngine
 
-STATUS: ABANDONED
+STATUS: ABANDONED, BECAUSE IT'S A POINTLESS PROJECT
 
 A small game engine made for fun in C++ using SDL2, specifically designed for UNDERTALE fan-games.
 
